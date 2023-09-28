@@ -5,17 +5,6 @@ const app = express();
 let data = new Date();
 let msgErro = '';
 
-app.get ('/historicoIPCA',(req,res) => {
-    const ano = Number(req.query.ano);
-    let resultado = ano ? buscaPorAno(ano) : buscaTodos();
-    if (resultado.length > 0)
-        res.json(resultado);
-    else{
-        msgErro = {'Erro':'Ano inválido, nenhum registro encontrado!'};
-        res.status(404).json(msgErro);
-    }
-});
-
 app.get ('/historicoIPCA/reajuste',(req,res) => {
     const valor = Number(req.query.valor);
     const mesInicial = Number(req.query.mesInicial);
@@ -31,6 +20,17 @@ app.get ('/historicoIPCA/reajuste',(req,res) => {
         });
     } else{
         msgErro = {'Erro':'Parâmetros inválidos, não foi possível realizar o cálculo!'};
+        res.status(404).json(msgErro);
+    }
+});
+
+app.get ('/historicoIPCA',(req,res) => {
+    let ano = parseInt(req.query.ano);
+    let resultado = ano ? buscaPorAno(ano) : buscaTodos();
+    if (resultado.length > 0)
+        res.json(resultado);
+    else{
+        msgErro = {'Erro':'Ano inválido, nenhum registro encontrado!'};
         res.status(404).json(msgErro);
     }
 });
