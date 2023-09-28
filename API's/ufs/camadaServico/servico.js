@@ -1,4 +1,4 @@
-import colecaoUf from '../dados/dados.js';
+import colecaoUf from '../camadaDados/dados.js';
 
 function buscaTodos(){
     return colecaoUf;
